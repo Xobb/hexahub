@@ -23,16 +23,17 @@ Options:
 
 Environment:
     OCTOHUB_TOKEN       GitHub personal access token
+    OCTOHUB_ENDPOINT    GitHub endpoint if you use Github Enterprise
     OCTOHUB_LOGLEVEL    Log level debugging sent to stderr
 
 Example usage:
-    octohub GET /users/:user
-    octohub GET /user/issues filter=assigned labels=bug
-    octohub GET /repos/:owner/:repo/issues
-    octohub GET /repos/:owner/:repo/issues sort=updated --max-pages=3
-    octohub POST /repos/:owner/:repo/issues --input=issue.json
-    octohub POST /user/repos --input=repo.json
-    cat repo.json | octohub POST /orgs/:org/repos --input=-
+    hexahub GET /users/:user
+    hexahub GET /user/issues filter=assigned labels=bug
+    hexahub GET /repos/:owner/:repo/issues
+    hexahub GET /repos/:owner/:repo/issues sort=updated --max-pages=3
+    hexahub POST /repos/:owner/:repo/issues --input=issue.json
+    hexahub POST /user/repos --input=repo.json
+    cat repo.json | hexahub POST /orgs/:org/repos --input=-
 
 http://developer.github.com/v3/
 """
@@ -42,8 +43,8 @@ import sys
 import getopt
 import simplejson as json
 
-from octohub.connection import Connection, Pager
-from octohub.exceptions import ResponseError
+from connection import Connection, Pager
+from exceptions import ResponseError
 
 def fatal(e):
     print >> sys.stderr, 'Error: ' + str(e)
@@ -99,7 +100,8 @@ def main():
         params[key] = val
 
     token = os.environ.get('OCTOHUB_TOKEN', None)
-    conn = Connection(token)
+    endpoint = os.environ.get('OCTOHUB_ENDPOINT', None)
+    conn = Connection(token, endpoint)
 
     try:
         if max_pages is None:

@@ -8,5 +8,5 @@
 # version.
 
 __version__ = '0.1'
-__useragent__ = 'octohub/%s' % __version__
+__useragent__ = 'hexahub/%s' % __version__
 

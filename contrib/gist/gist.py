@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Copyright (c) 2013 Alon Swartz <alon@turnkeylinux.org>
 #
-# This file is part of octohub/contrib.
+# This file is part of hexahub/contrib.
 #
 # OctoHub is free software; you can redistribute it and/or modify it under the
 # terms of the GNU General Public License as published by the Free Software
@@ -32,7 +32,7 @@ Examples:
     gist --noauth               List public gists (limited to first page)
     gist --noauth a.txt         Create anonymous secret gist with single file
 
-    octohub DELETE /gists/:id   Delete a gist
+    hexahub DELETE /gists/:id   Delete a gist
 """
 
 import os
@@ -40,7 +40,7 @@ import sys
 import getopt
 import simplejson as json
 
-from octohub.connection import Connection, Pager
+from hexahub.connection import Connection, Pager
 
 def fatal(e):
     print >> sys.stderr, 'Error: ' + str(e)

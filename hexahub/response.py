@@ -9,8 +9,8 @@
 
 import re
 
-from octohub.utils import AttrDict, get_logger
-from octohub.exceptions import ResponseError, OctoHubError
+from hexahub.utils import AttrDict, get_logger
+from hexahub.exceptions import ResponseError, OctoHubError
 
 log = get_logger('response')
 

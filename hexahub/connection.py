@@ -9,13 +9,13 @@
 
 import requests
 
-from octohub import __useragent__
-from octohub.response import parse_response
+from hexahub import __useragent__
+from hexahub.response import parse_response
 
 class Pager(object):
     def __init__(self, conn, uri, params, max_pages=0):
         """Iterator object handling pagination of Connection.send (method: GET)
-            conn (octohub.Connection): Connection object
+            conn (hexahub.Connection): Connection object
             uri (str): Request URI (e.g., /user/issues)
             params (dict): Parameters to include in request
             max_pages (int): Maximum amount of pages to get (0 for all)
@@ -42,11 +42,14 @@ class Pager(object):
             self.params = response.parsed_link.next.params
 
 class Connection(object):
-    def __init__(self, token=None):
+    def __init__(self, token=None, endpoint=None):
         """OctoHub connection
             token (str): GitHub Token (anonymous if not provided)
         """
-        self.endpoint = 'https://api.github.com'
+        if endpoint:
+            self.endpoint = endpoint
+        else:
+            self.endpoint = 'https://api.github.com'
         self.headers = {'User-Agent': __useragent__}
 
         if token:

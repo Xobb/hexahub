@@ -1,4 +1,4 @@
-OctoHub: Low level Python and CLI interface to GitHub
+HexaHub: A coward's fork of OctoHub: Low level Python and CLI interface to GitHub
 =====================================================
 
 OctoHub is a Python package that provides a low level interface to the
@@ -34,8 +34,8 @@ Installation
 
 ::
 
-    $ git clone https://github.com/turnkeylinux/octohub.git
-    $ cd octohub
+    $ git clone https://github.com/Xobb/hexahub.git
+    $ cd hexahub
     $ sudo make install
 
 Dependencies

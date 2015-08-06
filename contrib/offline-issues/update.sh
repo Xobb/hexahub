@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # Copyright (c) 2013 Alon Swartz <alon@turnkeylinux.org>
 #
-# This file is part of octohub/contrib
+# This file is part of hexahub/contrib
 #
 # OctoHub is free software; you can redistribute it and/or modify it under the
 # terms of the GNU General Public License as published by the Free Software
