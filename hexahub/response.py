@@ -8,6 +8,8 @@
 # version.
 
 import re
+import pprint
+import urlparse
 
 from hexahub.utils import AttrDict, get_logger
 from hexahub.exceptions import ResponseError, OctoHubError
@@ -24,13 +26,16 @@ def _get_content_type(response):
 
     return content_type
 
-def _parse_link(header_link):
+def _parse_link(response):
     """Parse header link and return AttrDict[rel].uri|params"""
+    header_link = response.headers['link']
     links = AttrDict()
     for s in header_link.split(','):
         link = AttrDict()
 
-        m = re.match('<https://api.github.com(.*)\?(.*)>', s.split(';')[0].strip())
+        parsed_url = urlparse.urlparse(response.url)
+        regex = "<%s://%s(.*)\?(.*)>" % (parsed_url.scheme, parsed_url.netloc)
+        m = re.match(regex, s.split(';')[0].strip())
         link.uri = m.groups()[0]
         link.params = {}
         for kv in m.groups()[1].split('&'):
@@ -77,7 +82,7 @@ def parse_response(response):
     response.parsed_link = AttrDict()
 
     if 'link' in response.headers.keys():
-        response.parsed_link = _parse_link(response.headers['link'])
+        response.parsed_link = _parse_link(response)
 
     headers = ['status', 'x-ratelimit-limit', 'x-ratelimit-remaining']
     for header in headers:
