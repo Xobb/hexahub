@@ -1,4 +1,4 @@
-HexaHub: A coward's fork of OctoHub: Low level Python and CLI interface to GitHub
+HexaHub: A coward's fork of OctoHub: Low level Python and CLI interface to GitHub (Enterprise)
 =====================================================
 
 OctoHub is a Python package that provides a low level interface to the
