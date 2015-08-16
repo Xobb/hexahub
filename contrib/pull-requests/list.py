@@ -81,7 +81,9 @@ def main():
     if not len(args) == 1:
         usage()
 
-    conn = Connection(token)
+    endpoint = os.environ.get('OCTOHUB_ENDPOINT', 'https://github.com/api/v3')
+
+    conn = Connection(token, endpoint)
 
     if '/' in args[0]:
         owner = args[0].split('/')[0]

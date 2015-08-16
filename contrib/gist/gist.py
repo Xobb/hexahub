@@ -61,16 +61,16 @@ def render_gist(gist):
     visible = 'pub' if gist.public else 'sec'
     return '[%s] %s %s' % (visible, gist.html_url, files)
 
-def get_gists(token, uri):
+def get_gists(token, endpoint, uri):
     max_pages = 0 if token else 1
 
-    conn = Connection(token)
+    conn = Connection(token, endpoint)
     pager = Pager(conn, uri, params={}, max_pages=max_pages)
     for response in pager:
         for gist in response.parsed:
             yield gist
 
-def create_gist(token, uri, paths, public=False, description=None):
+def create_gist(token, endpoint, uri, paths, public=False, description=None):
     data = {}
 
     data['files'] = {}
@@ -84,7 +84,7 @@ def create_gist(token, uri, paths, public=False, description=None):
 
     data['public'] = public
 
-    conn = Connection(token)
+    conn = Connection(token, endpoint)
     response = conn.send('POST', uri, params={}, data=json.dumps(data))
 
     return response.parsed
@@ -119,6 +119,8 @@ def main():
     if not auth:
         token = None
 
+    endpoint = os.environ.get('OCTOHUB_ENDPOINT', 'https://github.com/api/v3')
+
     uri = '/gists'
     paths = args
     for path in paths:
@@ -126,10 +128,10 @@ def main():
             fatal('does not exist: %s' % path)
 
     if len(paths) == 0:
-        for gist in get_gists(token, uri):
+        for gist in get_gists(token, endpoint, uri):
             print render_gist(gist)
     else:
-        gist = create_gist(token, uri, paths, public, description)
+        gist = create_gist(token, endpoint, uri, paths, public, description)
         print render_gist(gist)
 
 if __name__ == '__main__':
