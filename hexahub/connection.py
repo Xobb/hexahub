@@ -42,9 +42,11 @@ class Pager(object):
             self.params = response.parsed_link.next.params
 
 class Connection(object):
-    def __init__(self, token=None, endpoint=None):
+    def __init__(self, token=None, endpoint=None, logger=None):
         """OctoHub connection
             token (str): GitHub Token (anonymous if not provided)
+            endpoint (str): Github Enterprise API Endpoint (Github official if not provided)
+            logger (object): lggr instance
         """
         if endpoint:
             self.endpoint = endpoint
@@ -54,6 +56,9 @@ class Connection(object):
 
         if token:
             self.headers['Authorization'] = 'token %s' % token
+
+        if logger:
+            self.logger = logger
 
     def send(self, method, uri, params={}, data=None):
         """Prepare and send request
@@ -68,6 +73,8 @@ class Connection(object):
                 http://docs.python-requests.org/en/latest/api/#requests.Response
         """
         url = self.endpoint + uri
+        if self.logger:
+            self.logger.info("Request: %s %s with %s" % (method, url, ", ".join(params)))
         kwargs = {'headers': self.headers, 'params': params, 'data': data}
         response = requests.request(method, url, **kwargs)
 
