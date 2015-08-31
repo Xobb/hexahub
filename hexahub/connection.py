@@ -8,7 +8,7 @@
 # version.
 
 import requests
-
+import json
 from hexahub import __useragent__
 from hexahub.response import parse_response
 
@@ -38,8 +38,10 @@ class Pager(object):
             if not 'next' in response.parsed_link.keys():
                 break
 
-            self.uri = response.parsed_link.next.uri
+            # I don't know why, but parsing the next link provides really bad result here
+            # self.uri = response.parsed_link.next.uri
             self.params = response.parsed_link.next.params
+
 
 class Connection(object):
     def __init__(self, token=None, endpoint=None, logger=None):
@@ -74,9 +76,9 @@ class Connection(object):
         """
         url = self.endpoint + uri
         if self.logger:
-            self.logger.info("Request: %s %s with %s" % (method, url, ", ".join(params)))
+            self.logger.info("Request: %s %s with %s" % (method, url, json.dumps(params, sort_keys=True,
+                                                                                 indent=2, separators=(',', ': '))))
         kwargs = {'headers': self.headers, 'params': params, 'data': data}
         response = requests.request(method, url, **kwargs)
 
         return parse_response(response)
-
