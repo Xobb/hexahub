@@ -76,7 +76,7 @@ class Connection(object):
         """
         url = self.endpoint + uri
         if self.logger:
-            self.logger.info("Request: %s %s with %s" % (method, url, json.dumps(params, sort_keys=True,
+            self.logger.debug("Request: %s %s with %s" % (method, url, json.dumps(params, sort_keys=True,
                                                                                  indent=2, separators=(',', ': '))))
         kwargs = {'headers': self.headers, 'params': params, 'data': data}
         response = requests.request(method, url, **kwargs)
