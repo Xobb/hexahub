@@ -12,6 +12,7 @@ import json
 from hexahub import __useragent__
 from hexahub.response import parse_response
 
+
 class Pager(object):
     def __init__(self, conn, uri, params, max_pages=0):
         """Iterator object handling pagination of Connection.send (method: GET)
@@ -44,6 +45,8 @@ class Pager(object):
 
 
 class Connection(object):
+    logger = None
+
     def __init__(self, token=None, endpoint=None, logger=None):
         """OctoHub connection
             token (str): GitHub Token (anonymous if not provided)
@@ -77,7 +80,7 @@ class Connection(object):
         url = self.endpoint + uri
         if self.logger:
             self.logger.debug("Request: %s %s with %s" % (method, url, json.dumps(params, sort_keys=True,
-                                                                                 indent=2, separators=(',', ': '))))
+                                                                                  indent=2, separators=(',', ': '))))
         kwargs = {'headers': self.headers, 'params': params, 'data': data}
         response = requests.request(method, url, **kwargs)
 
