@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     install_requires=[
         'simplejson',
-        'requests',
+        'requests==2.7',
     ],
     entry_points={
         'console_scripts': [
