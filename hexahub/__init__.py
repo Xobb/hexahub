@@ -7,6 +7,6 @@
 # Foundation; either version 3 of the License, or (at your option) any later
 # version.
 
-__version__ = '1.0.7'
+__version__ = '1.0.8'
 __useragent__ = 'hexahub/%s' % __version__
 
