@@ -100,7 +100,7 @@ def parse_response(response):
         if not response.status_code == 204:
             raise OctoHubError('unhandled content_type: %s' % content_type)
 
-    if not response.status_code in (200, 201, 204):
+    if not response.status_code in (200, 201, 202, 204):
         raise ResponseError(response.parsed)
 
     return response
