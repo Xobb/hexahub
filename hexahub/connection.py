@@ -39,9 +39,11 @@ class Pager(object):
             if not 'next' in response.parsed_link.keys():
                 break
 
+
             # I don't know why, but parsing the next link provides really bad result here
-            # self.uri = response.parsed_link.next.uri
-            self.params = response.parsed_link.next.params
+            next_link = response.links['next']['url']
+            count_endpoint = len(self.conn.endpoint)
+            self.uri = next_link[count_endpoint:]
 
 
 class Connection(object):
